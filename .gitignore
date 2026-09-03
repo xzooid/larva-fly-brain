@@ -1,0 +1,14 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# flybody upstream clone (has its own .git; users clone it per README)
+flybody/
+
+# MuJoCo temp model files
+_money_tmp.xml
+
+# scratch / intermediates
+np
+*.npz
