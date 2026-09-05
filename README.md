@@ -22,8 +22,6 @@ More: `stabilize_hover_poke.gif` (stable hover + mid-air poke),
 `embodied_fly.gif` (poke → leg kick), `seizure.gif` (seizure regime),
 `composite_lesions.gif` (baseline \| KC lesion \| LN lesion side by side),
 `experiment_battery.png`, `stability_curve.png`, `thrust_calib.png`,
-`connectome_overview.png`. *(money_shot.gif — walk → take off → poke → keep
-flying — coming soon.)*
 
 ## What it does
 claw-touch sensors ──► sensory neurons (434)
