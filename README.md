@@ -49,10 +49,6 @@ the fly moves
 | poke RIGHT + KC lesion (mushroom body) | 1,225 | T1_right | 0.514 rad |
 | poke RIGHT + LN lesion (inhibitory) | **2,517** | T1_right | 0.539 rad |
 
-- **Stability theory**: the connectome under LIF dynamics has a critical
-  synaptic gain (~10.4, predicted from input-fluctuation analysis); below it
-  the brain responds and decays, above it it seizes. Gain 8 is the validated
-  operating point.
 - **KC lesion = null result**: the touch→leg reflex does not route through the
   mushroom body (KCs are olfactory/learning neurons) — a mechanism-backed
   negative result.
