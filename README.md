@@ -1,27 +1,26 @@
-# FlyBrain — a larval Drosophila connectome, embodied in a MuJoCo fly
+# FlyBrain: a larval Drosophila connectome, embodied in a MuJoCo fly model
+
+> Note: I struggled to find a body model for a "larva", hence I choose to go for an adult body ( so to be more precise this is a larval connectome on the adult fly body, which at first I treated it as a bigger problem than it turned out to be, but I still flag it as the main reason the reflex results are stylised ).
 
 **The 60-second version.** Neuroscientists mapped the complete brain of a baby
-fruit fly — 2,956 neurons and ~350,000 connections (Winding et al., *Science*,
-2023). I brought that wiring diagram to life in a physics simulator. Each
-neuron is a little "leaky bucket": it fills with input from its real
+fruit fly: 2,956 neurons and ~350,000 connections (Winding et al., *Science*,
+2023 / https://www.science.org/doi/10.1126/science.add9330 ). There are also bigger mappings like the Hemibrain or the full adult fruit fly brain ( https://www.nih.gov/news-events/nih-research-matters/complete-wiring-map-adult-fruit-fly-brain ), but I choose to resort to a simpler smaller brain to accomodate to the logic and gain some experience, I am not excluding the potential of trying out the adult one in the near future for similar projects and *experiments* 
+  
+I brought that wiring diagram to life in a physics simulator, MuJuCo. Each neuron is a little "leaky bucket": it fills with input from its real
 connections, and when it overflows it fires a spike that flows on to the
-neurons it actually connects to. I put this brain inside a simulated adult
-fly (flybody, DeepMind × Janelia). **Poke the fly's senses and the impulse
-travels through real neural wiring to its legs — it kicks.** Remove a class of
-neurons and the behavior changes. Crank up the gain and the brain seizes like
-an epileptic fit. Give it aerodynamic wings and it hovers — poke it mid-air
-and it keeps flying. Everything below is reproducible from this repository.
+neurons it actually connects to. I put this brain inside a simulated adult fly (flybody, DeepMind × Janelia).
+
+**Poke the fly's senses and the impulse
+travels through real neural wiring to its legs, it kicks.** Remove a class of neurons and the behavior changes. Crank up the gain and the brain seizes like
+an epileptic fit ( *can't believed I caused a virtual fly a seizure haha* ). Give it aerodynamic wings and it hovers, poke it mid-air and it keeps flying ( I was pleased to see how it regains stability like a real fly). Everything below is reproducible from this repository.
 
 ## Media
 | | |
 |---|---|
-| ![brain](brain_360_still.png) | ![lesions](brain_lesions_peak.png) |
-| the connectome in 3D (`brain_360.gif`) | lesion experiment, in the brain (`brain_lesions.gif`) |
+| ![fly](embodied_fly.gif) | ![lesions](brain_lesions.gif) |
+| the fly in 3D (`embodied_fly.gif`) | lesion experiment, in the brain (`brain_lesions.gif`) |
 
-More: `stabilize_hover_poke.gif` (stable hover + mid-air poke),
-`embodied_fly.gif` (poke → leg kick), `seizure.gif` (seizure regime),
-`composite_lesions.gif` (baseline \| KC lesion \| LN lesion side by side),
-`experiment_battery.png`, `stability_curve.png`, `thrust_calib.png`,
+**And more down below** ( statistical results of various *experiments* and more gif - disclaimer - *some* gifs, the flying ones, are badly generated, making the camera spin around the fly )
 
 ## What it does
 claw-touch sensors ──► sensory neurons (434)
@@ -36,28 +35,29 @@ firing rates (low-pass) ──► joint targets (position servos)
 ▼
 the fly moves
 
-
 ## Results
 | condition | descending spikes during poke | most active leg | peak deviation |
 |---|---|---|---|
-| control (no poke) | 0 | — | 0.034 rad |
+| control (no poke) | 0 | *(noise floor)* | 0.034 rad |
 | poke RIGHT | 1,206 | T1_right (ipsilateral) | 0.490 rad |
 | poke LEFT | 1,768 | T1_right | 0.711 rad |
 | poke BOTH | 5,641 | T1_right | 0.988 rad |
 | poke RIGHT + KC lesion (mushroom body) | 1,225 | T1_right | 0.514 rad |
 | poke RIGHT + LN lesion (inhibitory) | **2,517** | T1_right | 0.539 rad |
 
-- **KC lesion = null result**: the touch→leg reflex does not route through the
-  mushroom body (KCs are olfactory/learning neurons) — a mechanism-backed
+- **KC lesion = null result**: the touch -> leg reflex does not route through the
+  mushroom body (KCs are olfactory/learning neurons) - a mechanism-backed
   negative result.
 - **LN lesion = disinhibition**: removing the 110 inhibitory local
-  interneurons doubles motor output (1,206 → 2,517) and recruits extra legs —
+  interneurons doubles motor output (1,206 → 2,517) and recruits extra legs -
   an inhibitory gain-brake on the sensorimotor reflex.
 - **Flight**: with flybody's aerodynamic wings, the fly hovers stably
   (passive aerodynamic stability, max tilt ~3–7°). Poked mid-air it fires
   ~7,400 descending spikes, kicks, and keeps flying. A "wind-tunnel" thrust
   calibration revealed a wing-stall cliff (~0.3 rad amplitude) that explains
   earlier chaotic takeoffs.
+
+**Not one-command reproducible. You need flybody's assets and the connectome mirror, the exact commands are below and verified them on Artix / Python 3.14 / mujoco 3.11**
 
 ## Quickstart
 ```bash
